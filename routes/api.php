@@ -7,7 +7,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::get('/api', function () {
+Route::get('/', function () {
     return response()->json([
         'test' => 'test'
     ]);
