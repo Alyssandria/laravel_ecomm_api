@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthService {
@@ -19,6 +20,23 @@ class AuthService {
             'message' => "Registered Successfully",
             'data' => $user
         ], 201);
+    }
+
+    public function login(array $credentials) {
+
+        $user = User::where('email', $credentials['email'])->first();
+
+        if (!Auth::attempt($credentials)){
+            return response()->json([
+                'success' => false,
+                'message' => 'The provided credentials do not match our records.'
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Successfully Logged In'
+        ]);
     }
 
 }
